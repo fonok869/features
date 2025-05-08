@@ -27,8 +27,26 @@ class InMemoryLogTest {
 
     @Test
     void shouldCountOneLog() {
-        new ServiceToLog().putAllLogs("TitikakaTo", org.apache.logging.log4j.Level.INFO);
+        new ServiceToLog().putAllLogs("TitikakaTo", ch.qos.logback.classic.Level.INFO);
         assertThat(memoryAppender.countLogs()).isEqualTo(1);
+    }
+
+    @Test
+    void shouldCheckLogAndLevel() {
+        new ServiceToLog().putAllLogs("TitikakaTo", Level.INFO);
+        assertThat(memoryAppender.assertContainsLogAndLevel("TitikakaTo", ch.qos.logback.classic.Level.INFO)).isTrue();
+    }
+
+    @Test
+    void shouldCheckLogAndLevelWARN() {
+        new ServiceToLog().putAllLogs("Coucpu", Level.WARN);
+        assertThat(memoryAppender.assertContainsLogAndLevel("Coucpu", Level.WARN)).isTrue();
+    }
+
+    @Test
+    void shouldCheckLogAndLevelERROR() {
+        new ServiceToLog().putAllLogs("Coucpu", Level.ERROR);
+        assertThat(memoryAppender.assertContainsLogAndLevel("Coucpu", Level.ERROR)).isTrue();
     }
 
     @AfterEach
