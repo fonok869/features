@@ -49,6 +49,18 @@ class InMemoryLogTest {
         assertThat(memoryAppender.assertContainsLogAndLevel("Coucpu", Level.ERROR)).isTrue();
     }
 
+    @Test
+    void shouldCheckLogExistInAnyLevel() {
+        new ServiceToLog().putAllLogs("Coucou", Level.INFO);
+        assertThat(memoryAppender.assertContainsLog("Coucou")).isTrue();
+    }
+
+    @Test
+    void shouldCheckLogNotExist() {
+        new ServiceToLog().putAllLogs("Coucou", Level.INFO);
+        assertThat(memoryAppender.assertNotContainsLog("Coucou2")).isTrue();
+    }
+
     @AfterEach
     void tearDown() {
         memoryAppender.stop();
