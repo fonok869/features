@@ -21,6 +21,7 @@ public class SpringWebSecurity {
     @Bean
     public SecurityFilterChain springSecurityFilterChain2(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/free/**").permitAll()
                         .requestMatchers("/rs/**").hasRole("WS").anyRequest().authenticated()
                 ).addFilter(digestFilter())
                 .exceptionHandling(httpSecurityExceptionHandlingConfigurer ->
@@ -51,6 +52,8 @@ public class SpringWebSecurity {
     @Bean
     public UserDetailsService userDetailsService() {
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
+        // For Digest Authentification it is important to not use User.withDefaultPasswordEncoder()
+        // because it adds brypt encryption and the password will never match!!!!
         manager.createUser(User.builder().username("user").password("userPass").roles("USER", "WS").build());
         manager.createUser(User.builder().username("admin").password("adminPass").roles("USER", "ADMIN", "WS").build());
         return manager;
