@@ -24,7 +24,7 @@ class WebMockMvcTest {
     @Test
     void shouldHaveReturnOk() throws Exception {
         when(featureService.getFeatureName()).thenReturn("Rest Feature Service");
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/test")).andDo(print())
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/rs/test")).andDo(print())
                 .andExpect(status().isOk()).andExpect(content().string("Rest Feature Service"));
     }
 }
