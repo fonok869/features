@@ -20,7 +20,7 @@ class WebLayerFeatureTest {
 
     @Test
     void shouldReturnDefaultOkMessage() throws Exception {
-        this.mockMvc.perform(MockMvcRequestBuilders.get("/")).andDo(print())
+        this.mockMvc.perform(MockMvcRequestBuilders.get("/free/test")).andDo(print())
                 .andExpect(status().isOk()).andExpect(content().string("Hello World"));
     }
 }
